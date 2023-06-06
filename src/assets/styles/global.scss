@@ -69,3 +69,25 @@ input {
 .oculto {
     display: none !important;
 }
+
+input{
+    &::placeholder{
+        color: $cinza2;
+        opacity: 1;
+    }
+
+    &:-ms-input-placeholder{
+        color: $cinza2;
+    }
+
+    &::-ms-input-placeholder{
+        color: $cinza2;
+    }
+}
+
+body{
+    @media screen and (min-width: $desktopBreakpoint) {
+        background-color: $cinza5;
+        background-image: url("../imagens/fundo-desktop.svg");
+    }
+}
