@@ -3,6 +3,10 @@ import { defineComponent } from 'vue';
 import InputPublico from '../components/InputPublico.vue';
 import iconeLogin from '../assets/imagens/login.svg';
 import iconeSenha from '../assets/imagens/senha.svg';
+import { LoginServices } from '../services/LoginServices';
+import router from '../router';
+
+const loginService = new LoginServices();
 
 
 export default defineComponent({
@@ -10,7 +14,8 @@ export default defineComponent({
     setup() {
         return {
             iconeLogin,
-            iconeSenha
+            iconeSenha, 
+            loginService
         }
     },
     data() {
@@ -23,18 +28,36 @@ export default defineComponent({
     },
     //metodos
     methods: {
-        efetuarLogin() {
-            if (!this.login && !this.senha) {
-                this.erro = "Favor preencher o formulário";
-                return;
+        async efetuarLogin() {
+            try {
+                if (!this.login && !this.login.trim()
+                    && !this.senha && !this.senha.trim()) {
+                    this.erro = "Favor preencher o formulário";
+                    return;
+                }
+                this.loading = true;
+                await loginService.login({ login: this.login, senha: this.senha });
+                router.push({ name: 'home' });
+            } catch (e: any) {
+                console.log(e);
+                if (e?.response?.data?.erro) {
+                    this.erro = e?.response?.data?.erro;
+                } else {
+                    this.erro = 'Não foi possível efetuar o login, tente novamente!';
+                }
             }
-            alert('Login efetuado: ' + this.login + ", " + this.senha);
+             this.loading = false;
         },
-        setLogin(v: any) {
+        setLogin(v: any){
             this.login = v;
         },
-        setSenha(v: any) {
+        setSenha(v: any){
             this.senha = v;
+        }
+    },
+    computed: {
+        buttonText(){
+            return this.loading ? '... Carregando' : 'Login';
         }
     },
     components: { InputPublico }
@@ -52,7 +75,8 @@ export default defineComponent({
 
             <InputPublico :icone="iconeSenha" alt="Insira a senha" tipo="password" placeholder="Senha" :modelValue="senha"
                 @setInput="setSenha" />
-            <button @click.enter.prevent="efetuarLogin">Login</button>
+            <button @click.enter.prevent="efetuarLogin"
+                    :disabled="loading">{{ buttonText }}</button>
             <div class="link">
                 <p>Não possui uma conta?</p>
                 <a>Faça seu cadastro agora!</a>
@@ -62,4 +86,3 @@ export default defineComponent({
 </template>
 
 <style lang="scss" src="@/assets/styles/paginaPublica.scss"/>
-
