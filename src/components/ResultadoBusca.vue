@@ -3,6 +3,7 @@ import router from '@/router';
 import { defineComponent } from 'vue'
 import Avatar from './Avatar.vue'
 
+
 export default defineComponent({
     props: {
         nome: String,
