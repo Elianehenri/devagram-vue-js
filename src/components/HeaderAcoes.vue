@@ -28,10 +28,11 @@ export default defineComponent({
 <template>
     <div class="container-acoes">
         <img src="../assets/imagens/voltar.svg" alt="voltar" v-if="showLeft && isLeftIcon" @click="goBack" />
-        <span v-else-if="showLeft && !isLeftIcon">Cancelar</span>
+        <span v-else-if="showLeft && !isLeftIcon" @click="goBack">Cancelar</span>
         <strong>{{ title }}</strong>
         <img src="../assets/imagens/sair.svg" alt="sair" v-if="showRight && isRightIcon" @click="logout" />
-        <span class="principal" v-else-if="showRight && !isRightIcon">{{ rightLabel }}</span>
+        <span class="principal" v-else-if="showRight && !isRightIcon"
+                @click="$emit('acoesCallback')">{{ rightLabel }}</span>
     </div>
 </template>
 

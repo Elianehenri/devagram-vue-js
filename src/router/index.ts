@@ -6,6 +6,8 @@ import CadastroVue from '@/views/Cadastro.vue';
 import UsuarioVue from '@/views/Usuario.vue';
 import PerfilVue from '@/views/Perfil.vue';
 import EditarVue from '@/views/Editar.vue';
+import PublicacaoVue from '@/views/Publicacao.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +47,12 @@ const router = createRouter({
       component: EditarVue,
       meta: { rotaPrivada: true }
     },
+    {
+      path: '/publicacao',
+      name: 'publicacao',
+      component: PublicacaoVue,
+      meta: { rotaPrivada: true }
+    },
   ]
 });
 
@@ -56,4 +64,6 @@ router.beforeEach((to, from) => {
     return { name: 'home' }
   }
 });
+
 export default router
+

@@ -12,7 +12,6 @@ import router from '@/router';
 const feedServices = new FeedServices();
 const MAX_DESCRICAO = 90;
 
-
 export default defineComponent({
     setup() {
         return {
@@ -39,22 +38,22 @@ export default defineComponent({
         async tooglCurtir() {
             try {
                 await feedServices.togglCurtir(this.post?._id);
-                const index = this.post?.likes?.findIndex((e:String) => e === this.loggedUserId);
-                if (index != -1){
+                const index = this.post?.likes?.findIndex((e: String) => e === this.loggedUserId);
+                if (index != -1) {
                     this.post?.likes?.splice(index, 1);
-                }else{
+                } else {
                     this.post?.likes?.push(this.loggedUserId);
                 }
-            } catch(e){
+            } catch (e) {
                 console.log(e);
             }
         },
-        togglComentario(){
+        togglComentario() {
             this.showComentario = !this.showComentario;
         },
         async enviarComentario() {
-            try{
-                if(!this.comentarioMsg || !this.comentarioMsg.trim()) {
+            try {
+                if (!this.comentarioMsg || !this.comentarioMsg.trim()) {
                     return;
                 }
 
@@ -68,18 +67,18 @@ export default defineComponent({
 
                 this.comentarioMsg = '';
                 this.showComentario = false;
-            } catch(e){
+            } catch (e) {
                 console.log(e);
             }
         },
-        togglDescricaoFull(){
+        togglDescricaoFull() {
             this.showDescricaoFull = !this.showDescricaoFull;
         }
     },
     components: { Avatar },
     computed: {
-        obterIconeCurtir(){
-            if(this.post?.likes && this.post?.likes.findIndex((e: String) => e === this.loggedUserId) != -1){
+        obterIconeCurtir() {
+            if (this.post?.likes && this.post?.likes.findIndex((e: String) => e === this.loggedUserId) != -1) {
                 return imgCurtiu
             }
             return imgCurtir
@@ -88,7 +87,7 @@ export default defineComponent({
             return this.showComentario ? imgComentarioAtivo : imgComentario;
         },
         exibirDescricao() {
-            if(this.showDescricaoFull){
+            if (this.showDescricaoFull) {
                 return this.post?.descricao;
             }
             return this.post?.descricao?.length > MAX_DESCRICAO ? this.post?.descricao?.substring(0, MAX_DESCRICAO) + '...' : this.post?.descricao;
@@ -112,19 +111,18 @@ export default defineComponent({
         <div class="rodape">
             <div class="acoes">
                 <img :src="obterIconeCurtir" alt="Icone curtir" class="feedIcone" @click="tooglCurtir" />
-                <img :src="obterIconeComentario" alt="Icone comentar" class="feedIcone" 
-                    @click="togglComentario"/>
+                <img :src="obterIconeComentario" alt="Icone comentar" class="feedIcone" @click="togglComentario" />
                 <span class="curtidas">
                     Curtido por <strong>{{ post?.likes?.length }}</strong> pessoa{{ post?.likes?.length !== 1 ? 's' : '' }}
                 </span>
             </div>
 
             <div class="descricao">
-                <strong>{{post?.usuario?.nome}}</strong>
+                <strong>{{ post?.usuario?.nome }}</strong>
                 <p>
-                    {{exibirDescricao}}
-                    <span v-if="post?.descricao.length > MAX_DESCRICAO && !showDescricaoFull" 
-                        @click="togglDescricaoFull" class="mais">
+                    {{ exibirDescricao }}
+                    <span v-if="post?.descricao.length > MAX_DESCRICAO && !showDescricaoFull" @click="togglDescricaoFull"
+                        class="mais">
                         mais
                     </span>
                 </p>
@@ -132,17 +130,16 @@ export default defineComponent({
 
             <div class="comentarios">
                 <div v-for="(comentario, index) in post?.comentarios" :key="index">
-                    <strong>{{comentario.nome}}</strong>
-                    <p>{{comentario.comentario}}</p>
+                    <strong>{{ comentario.nome }}</strong>
+                    <p>{{ comentario.comentario }}</p>
                 </div>
             </div>
         </div>
 
-        <!-- implementar comentario -->
         <div class="container-comentario" v-if="showComentario">
             <Avatar alt="imagem do usuário logado" :imagem="loggedAvatar" />
             <input type="text" v-model="comentarioMsg" placeholder="Adicione um comentário..."
-                @keyup.enter="enviarComentario"/>
+                @keyup.enter="enviarComentario" />
             <button type="button" @click="enviarComentario">
                 Publicar
             </button>
@@ -150,9 +147,5 @@ export default defineComponent({
     </div>
 </template>
 
- 
 
-
-
-
-<style lang="scss" src="@/assets/styles/Postagem.scss" /> 
+<style lang="scss" src="@/assets/styles/postagem.scss" />

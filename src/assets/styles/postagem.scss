@@ -93,13 +93,15 @@
         .comentarios {
             max-height: 100px;
             overflow-y: auto;
+           
 
             div {
-                height: 20px;
+                min-height: 18px;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 justify-content: start;
+               
 
                 strong {
                     margin-right: 5px;
@@ -116,6 +118,7 @@
         padding: 0 12px;
         margin-bottom: 16px;
         margin-top: 5px;
+        
 
         input{
             resize: none;
@@ -187,6 +190,7 @@
             .comentarios{
                 p{
                     font-size: 16px;
+                    
                 }
                 strong{
                     font-size: 16px;
@@ -198,6 +202,7 @@
             margin-bottom: 25px;
             margin-top: 15px;
             padding: 0 16px;
+            
 
             input{
                 font-size: 16px;
